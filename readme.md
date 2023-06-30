@@ -10,7 +10,7 @@ Where <level-type> can be:
 - rhel8_level2_workstation
 
 Example:
-ansible-playbook cis_rhel8_oscap.yml --tags "audit, rhel8_level1_server"
+`ansible-playbook cis_rhel8_oscap.yml --tags "audit, rhel8_level1_server"`
 
 
 # PATCH
