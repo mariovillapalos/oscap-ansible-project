@@ -28,6 +28,3 @@ To get started with the project, follow the instructions provided in the respect
 This project is maintained by Mario Villapalos Campeño.
 
 
-## License
-
-The project is licensed under the [MIT License](./LICENSE).
