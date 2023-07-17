@@ -21,9 +21,13 @@ Example:
 
 ## Create a patch file
 `ansible-playbook <playbook-filename> --tags "patch, <level-type>"`
+
 Where "playbook-filename" can be:
 - cis_rhel8_oscap.yml if you are working in an online environment
 - cis_rhel8_oscap_offline.yml if you are working in an offline environment
+
+Example:
+`ansible-playbook cis_rhel8_oscap.yml --tags "patch, rhel8_level1_server"`
 
 ## Run the patch file
 `ansible-playbook --become -kK <patch_file>`
@@ -41,7 +45,6 @@ Where "patch_file" can be:
 - patch_cis_workstation_l2.yml
 
 Example:
-`ansible-playbook cis_rhel8_oscap.yml --tags "patch, rhel8_level1_server"`
 `ansible-playbook --become -kK patch_cis_server_l1.yml`
 
 
