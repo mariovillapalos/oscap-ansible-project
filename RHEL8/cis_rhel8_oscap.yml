@@ -94,7 +94,7 @@
     - name: Fetch remote report html file
       fetch:
         src: /tmp/{{ file_name }}
-        dest: /home/mario/Documents/oscap-ansible-project/
+        dest: /home/mario/Documents/oscap-ansible-project/RHEL8
         flat: yes
       tags:
         - audit
@@ -121,7 +121,7 @@
     - name: Fetch remediation file
       fetch:
         src: /tmp/{{ patch_file }}
-        dest: /home/mario/Documents/oscap-ansible-project/
+        dest: /home/mario/Documents/oscap-ansible-project/RHEL8/
         flat: yes
       tags:
         - patch

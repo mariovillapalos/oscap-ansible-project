@@ -1,0 +1,6 @@
+---
+- name: Execute Role Windows 2019 DISA STIG
+  hosts: win19server
+  roles:
+    - name: Windows-2019-STIG-devel
+  ignore_errors: yes
