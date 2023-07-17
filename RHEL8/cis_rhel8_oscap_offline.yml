@@ -1,5 +1,5 @@
 ---
-- name: RHEL 8 CIS Compliance Check and Remediation in an Online Environment
+- name: RHEL 8 CIS Compliance Check and Remediation in an Offline Environment
   hosts: rhel8
   gather_facts: false
   become: true
@@ -54,12 +54,26 @@
       tags:
       - always
 
-    - name: Install openscap-scanner package
-      dnf:
-        name: openscap-scanner
-        state: present
+    - name: Copy OpenScap RPM files to remote host
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: /tmp/
+      with_items:
+        - ./repos/openscap-1.3.7-1.el8.x86_64.rpm
+        - ./repos/openscap-scanner-1.3.7-1.el8.x86_64.rpm
       tags:
-      - always
+        - always
+      when: openscap_scanner_installed.rc != 0
+
+    - name: Install openscap-scanner package and openscap repository
+      dnf:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - /tmp/openscap-scanner-1.3.7-1.el8.x86_64.rpm
+        - /tmp/openscap-1.3.7-1.el8.x86_64.rpm
+      tags:
+        - always
       when: openscap_scanner_installed.rc != 0
 
     - name: Check if scap-security-guide is installed
@@ -70,9 +84,17 @@
       tags:
       - always
 
+    - name: Copy Scap-Security-Guide RPM files to remote host
+      ansible.builtin.copy:
+        src: ./repos/scap-security-guide-0.1.66-2.el8_7.noarch.rpm
+        dest: /tmp/
+      tags:
+        - always
+      when: scap_security_guide_installed.rc != 0
+
     - name: Install scap security-guide package
       dnf:
-        name: scap-security-guide
+        name: /tmp/scap-security-guide-0.1.66-2.el8_7.noarch.rpm
         state: present
       when: scap_security_guide_installed.rc != 0
       tags:
@@ -81,7 +103,7 @@
     - name: Run OpenSCAP evaluation for CIS RHEL8 Benchmark -  {{ cis_level }}
       ansible.builtin.shell:
         cmd: "oscap xccdf eval --oval-results --profile {{ profile }} --results-arf /tmp/{{ arf_file }} --report /tmp/{{ file_name }} /usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml"
-      failed_when: false
+      failed_when: false  # Set failed_when to false to force success
       register: oscap_output
       tags:
         - audit
@@ -101,7 +123,7 @@
         - rhel8_level1_workstation
         - rhel8_level2_workstation
       when: "'audit' in ansible_run_tags and ('rhel8_level1_server' in ansible_run_tags or 'rhel8_level2_server' in ansible_run_tags or 'rhel8_level1_workstation' in ansible_run_tags or 'rhel8_level2_workstation' in ansible_run_tags)"
-
+ 
     - name: Fetch remote report html file
       fetch:
         src: /tmp/{{ file_name }}
