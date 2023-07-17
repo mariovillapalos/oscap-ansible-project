@@ -25,7 +25,7 @@ To get started with the project, follow the instructions provided in the respect
 
 ## Author
 
-This project is maintained by Mario Villapalos Campeño. You can reach out to Mario via email at [your_email@example.com].
+This project is maintained by Mario Villapalos Campeño.
 
 
 ## License
