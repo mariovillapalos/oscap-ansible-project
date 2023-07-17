@@ -4,7 +4,7 @@
   tasks:
     - name: Copy msi installer of openscanner
       ansible.windows.win_copy:
-        src: /home/mario/Downloads/OpenSCAP-1.3.0-win32.msi
+        src: ./installer/OpenSCAP-1.3.0-win32.msi
         dest: C:\Users\ansible2019server\AppData\Local\Temp
 
     - name: Install openscanner with msi
@@ -13,8 +13,8 @@
 
     - name: Send SCAP file to the Windows Server 2019
       ansible.windows.win_copy:
-        src: /home/mario/Documents/scap/U_MS_Windows_Server_2019_V2R4_STIG_SCAP_1-2_Benchmark.xml
-        dest: C:\Temp
+        src: ./scap_files/U_MS_Windows_Server_2019_V2R4_STIG_SCAP_1-2_Benchmark.xml
+        dest: C:\Temp\
 
     - name: Set facts for oscap command
       set_fact:
@@ -41,5 +41,5 @@
     - name: Fetch remote report html file
       fetch:
         src: C:\Temp\report.html
-        dest: /home/mario/Documents/oscap-ansible-project/Windows2019Server/
+        dest: /home/mario/Documents/oscap-ansible-project/Windows2019Server/reports
         flat: yes
