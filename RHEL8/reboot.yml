@@ -1,0 +1,9 @@
+---
+- name: RHEL 8 reboot
+  hosts: rhel8
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Reboot the system
+      ansible.builtin.reboot:
+        reboot_timeout: 300

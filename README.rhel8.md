@@ -1,4 +1,4 @@
-# 1. AUDIT BEFORE PATCHING
+# 1. AUDIT BEFORE REMEDIATE
 
 ## Perform an audit before applying patches
 `ansible-playbook <playbook-filename> --tags "audit, <level-type>"`
@@ -17,9 +17,9 @@ Example:
 `ansible-playbook cis_rhel8_oscap.yml --tags "audit, rhel8_level1_server"` 
 
 
-# 2. PATCH
+# 2. REMEDIATE
 
-## Create a patch file
+## Generate a patch playbook
 `ansible-playbook <playbook-filename> --tags "patch, <level-type>"`
 
 Where "playbook-filename" can be:
@@ -47,8 +47,13 @@ Where "patch_file" can be:
 Example:
 `ansible-playbook --become -kK patch_cis_server_l1.yml`
 
+## Reboot the remote system
+After applying the remediation it is necessary to reboot the system. To do this you can run the `reboot.yml` playbook which takes care of this.
 
-# 3. AUDIT AFTER PATCHING
+Example:
+`ansible-playbook --become -kK reboot.yml`
+
+# 3. AUDIT AFTER REMEDIATE
 
 ## Perform an audit after applying patches
 `ansible-playbook <playbook-filename> --limit rhel8 --become -kK --tags "audit, <level-type>"`
