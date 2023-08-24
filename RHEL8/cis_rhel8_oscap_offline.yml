@@ -141,7 +141,7 @@
       ansible.builtin.shell:
         cmd: oscap xccdf generate fix --fix-type ansible --result-id "" /tmp/{{ arf_file }} > /tmp/{{ patch_file }}
       ignore_errors: yes
-      register: oscap_output
+      register: remediate_output
       tags:
         - patch
         - rhel8_level1_server
@@ -162,6 +162,6 @@
         - rhel8_level2_server
         - rhel8_level1_workstation
         - rhel8_level2_workstation
-      when: "'patch' in ansible_run_tags and ('rhel8_level1_server' in ansible_run_tags or 'rhel8_level2_server' in ansible_run_tags or 'rhel8_level1_workstation' in ansible_run_tags or 'rhel8_level2_workstation' in ansible_run_tags)"
+      when: "remediate_output is succeeded and 'patch' in ansible_run_tags and ('rhel8_level1_server' in ansible_run_tags or 'rhel8_level2_server' in ansible_run_tags or 'rhel8_level1_workstation' in ansible_run_tags or 'rhel8_level2_workstation' in ansible_run_tags)"
 
    
