@@ -1,6 +1,6 @@
 
 
-# AnsibleSCAP - Automated Security Compliance Project
+# AnsibleSCAP - Security Compliance Automation Project
 
 Welcome to the AnsibleSCAP repository!
 
